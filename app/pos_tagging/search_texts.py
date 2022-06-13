@@ -10,8 +10,8 @@ def search_texts(texts, search_word, search_tag):
     toret = []
 
     tags = {'Nouns': ['NN', 'NNS', 'NNP', 'NNPS'],
-            'Possesives': ['PRP'],
-            'Personal pronouns': ['PRP$'],
+            'Personal pronouns': ['PRP'],
+            'Possesives': ['PRP$'],
             'Adverbs': ['RB', 'RBR', 'RBS'],
             'Adjectives': ['JJ', 'JJR', 'JJS'],
             'Verbs': ['VBD', 'VBG', 'VBN', 'VBP', 'VBZ']}

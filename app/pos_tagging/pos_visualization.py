@@ -14,15 +14,15 @@ def pos_visualization(texts):
 
     tokens = []
     tags = {'Nouns': ['NN', 'NNS', 'NNP', 'NNPS'],
-            'Possesives': ['PRP'],
-            'Personal pronouns': ['PRP$'],
+            'Personal pronouns': ['PRP'],
+            'Possesives': ['PRP$'],
             'Adverbs': ['RB', 'RBR', 'RBS'],
             'Adjectives': ['JJ', 'JJR', 'JJS'],
             'Verbs': ['VBD', 'VBG', 'VBN', 'VBP', 'VBZ']}
 
     counts = {'Nouns': Counter(),
-              'Possesives': Counter(),
               'Personal pronouns': Counter(),
+              'Possesives': Counter(),
               'Adverbs': Counter(),
               'Adjectives': Counter(),
               'Verbs': Counter()}
