@@ -1,5 +1,8 @@
 import argparse
 import pickle
+
+import pandas as pd
+
 from topic_modeling import *
 
 if __name__ == '__main__':
@@ -18,11 +21,15 @@ if __name__ == '__main__':
         person = args.person
         data = pickle.load(open(f"{str(path)}/files/preprocessed_posts/preprocessed_{str(person)}.pkl", 'rb'))
 
-        hyperparameter([post['preprocessed_body'] for post in data])
+        model_results = hyperparameter([post['preprocessed_body'] for post in data])
+
+        pd.DataFrame(model_results).to_csv(f"{str(path)}/files/topic_model/{str(person)}/lda_tuning_results.csv",
+                                           index=False)
 
     # python app\topic_model.py -o create -p person
     if args.option == "create":
         person = args.person
+
         data = pickle.load(open(f"{str(path)}/files/preprocessed_posts/preprocessed_{str(person)}.pkl", 'rb'))
 
-        topic_modeling([post['preprocessed_body'] for post in data], 6, 'asymmetric', 'symmetric' )
+        topic_modeling([post['preprocessed_body'] for post in data], 6, 'asymmetric', 'symmetric')

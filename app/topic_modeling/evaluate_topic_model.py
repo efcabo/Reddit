@@ -1,7 +1,6 @@
-from gensim import corpora, models, utils
+from gensim import corpora, models
 import numpy as np
 import tqdm
-import pandas as pd
 from pathlib import Path
 
 path = Path.cwd()
@@ -31,6 +30,8 @@ def hyperparameter(texts):
     de atopar os máis axeitados para os textos empregados
     """
 
+    print(len(texts))
+
     texts = [text for text in texts if text != []]
 
     dictionary = corpora.Dictionary(texts)
@@ -51,36 +52,33 @@ def hyperparameter(texts):
     beta = list(np.arange(0.01, 1, 0.3))
     beta.append('symmetric')
 
-    # Validation sets
-    num_of_docs = len(corpus)
-    corpus_sets = [utils.ClippedCorpus(corpus, int(num_of_docs * 0.75)), corpus]
-    corpus_title = ['75% Corpus', '100% Corpus']
-    model_results = {'Validation_Set': [],
-                     'Topics': [],
+    model_results = {'Topics': [],
                      'Alpha': [],
                      'Beta': [],
                      'Coherence': []
                      }
 
+    total = len(topics_range) * len(alpha) * len(beta)
+
     if 1 == 1:
-        pbar = tqdm.tqdm(total=540)
+        pbar = tqdm.tqdm(total=total)
 
-        # iterate through validation corpuses and parameters
-        for i in range(len(corpus_sets)):
-            for k in topics_range:
-                for a in alpha:
-                    for b in beta:
-                        # get the coherence score
-                        cv = compute_coherence_values(corpus=corpus_sets[i], texts=texts, dictionary=dictionary,
-                                                      k=k, a=a, b=b)
-                        # Save results
-                        model_results['Validation_Set'].append(corpus_title[i])
-                        model_results['Topics'].append(k)
-                        model_results['Alpha'].append(a)
-                        model_results['Beta'].append(b)
-                        model_results['Coherence'].append(cv)
+        # iterate through parameters
+        for k in topics_range:
+            for a in alpha:
+                for b in beta:
+                    # get the coherence score
+                    cv = compute_coherence_values(corpus=corpus, texts=texts, dictionary=dictionary,
+                                                  k=k, a=a, b=b)
+                    # Save results
+                    model_results['Topics'].append(k)
+                    model_results['Alpha'].append(a)
+                    model_results['Beta'].append(b)
+                    model_results['Coherence'].append(cv)
 
-                        pbar.update(1)
+                    pbar.update(1)
 
-        pd.DataFrame(model_results).to_csv(f"{str(path)}/files/topic_model/lda_tuning_results.csv", index=False)
         pbar.close()
+
+        return model_results
+

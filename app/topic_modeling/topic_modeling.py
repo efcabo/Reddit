@@ -32,7 +32,7 @@ def topic_modeling(texts: list, k, a, b, tfidf=True):
                                     eta=b)
     lda_model.save(f"{str(path)}/files/topic_model/model5.gensim")
 
-    topics = lda_model.print_topics(num_words=4)
+    topics = lda_model.print_topics()
 
     for topic in topics:
         print(topic)
