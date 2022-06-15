@@ -32,4 +32,4 @@ if __name__ == '__main__':
 
         data = pickle.load(open(f"{str(path)}/files/preprocessed_posts/preprocessed_{str(person)}.pkl", 'rb'))
 
-        topic_modeling([post['preprocessed_body'] for post in data], 6, 'asymmetric', 'symmetric')
+        topic_modeling([post['preprocessed_body'] for post in data], 5, 0.31, 'symmetric')
